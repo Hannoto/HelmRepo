@@ -1,0 +1,49 @@
+deployment:
+  type: "server"
+  namespace: "default"
+  replicas: 1
+  containerPort: 9999
+  livenessProbe:
+    path: /v2/api-docs?group=idm
+    initialDelaySeconds: 1200
+  readinessProbe:
+    path: /v2/api-docs?group=idm
+    initialDelaySeconds: 1200
+application:
+  entryPoint:
+  args:
+image:
+   repository: registry.dkatalis.com/dk-spirit-idm
+   tag: hannoto
+   secret: regcred
+   pullPolicy: Always
+resources:
+  limits:
+   cpu: 1000m
+   memory: 1Gi
+  requests:
+   cpu: 100m
+   memory: 256Mi
+nodeSelector: {}
+tolerations: []
+affinity: {}
+service:
+  type: ClusterIP
+  port: 80
+  annotations: {}
+ingress:
+  enabled: true
+  hostName: spirit-idm.cc470eca3b5404c519ff2118a0d8148b0.ap-southeast-5.alicontainer.com
+  tls:
+    enabled: true
+    secretName: spirit-tls
+configmap:
+  annotations:
+  data:
+hpa:
+  enabled: false
+  minReplica: 2
+  maxReplica: 10
+  targetCPUUtilizationPercentage: 70
+volumeMounts: []
+volumes: []

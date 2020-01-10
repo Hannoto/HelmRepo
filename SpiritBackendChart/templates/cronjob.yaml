@@ -1,0 +1,33 @@
+{{- if .Values.cronJob }}
+{{- $release_name := .Release.Name }}
+{{- $application_name := .Values.cronJob.application_name | default (include "application.name" .) }}
+{{- $application_chart := include "application.chart" . }}
+{{- $namespace := .Values.deployment.namespace }}
+{{- range .Values.cronJob.config }}
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+    name: "{{ .name }}-{{ $application_name }}"
+    namespace: {{ $namespace }}
+    labels:
+        chart: {{ $application_chart }}
+        release: {{ $release_name }}
+spec:
+    schedule: {{ .schedule }}
+    jobTemplate:
+        spec:
+            template:
+                spec:
+                    containers:
+                        - name: {{ .containerName }}
+                          image: byrnedo/alpine-curl
+                          command:
+                            - /bin/sh
+                          args:
+                            {{- range .args }}
+                            - {{ . }}
+                            {{- end }}
+                    restartPolicy: OnFailure
+---
+{{- end }}
+{{- end }}
