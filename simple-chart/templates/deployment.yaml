@@ -1,0 +1,54 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ template "application.name" . }}
+  namespace: {{ .Values.deployment.namespace }}
+  labels:
+    app: {{ template "application.name" . }}
+    chart: {{ template "application.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    imageVersion: {{ .Values.image.tag }}
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{ template "application.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "application.name" . }}
+        release: {{ .Release.Name }}
+      annotations:
+{{- if .Values.deployment.annotations }}
+{{ toYaml .Values.deployment.annotations | indent 8 }}
+{{- end }}
+    spec:
+      imagePullSecrets: 
+        - name: {{ .Values.image.secret }}
+      containers:
+      - args:
+          {{- range .Values.application.args }}
+          - {{ . }}
+          {{- end }}
+        command:
+          {{- range .Values.application.entryPoint }}
+          - {{ . }}
+          {{- end }}
+        envFrom:
+        - secretRef:
+            name: spirit-infra
+        - configMapRef:
+            name: {{ template "application.name" . }}
+        name: {{ template "application.name" . }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        {{- if eq .Values.deployment.type "server"}}
+        ports:
+          - name: http
+            containerPort: {{ .Values.deployment.containerPort }}
+            protocol: TCP
+        {{- end}}
+        resources:
+{{ toYaml .Values.resources | indent 12 }}

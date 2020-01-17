@@ -1,0 +1,34 @@
+application:
+  args: null
+  entryPoint: null
+configmap:
+  annotations: null
+  data: null
+deployment:
+  containerPort: 9999
+  namespace: default
+  replicas: 1
+  type: server
+image:
+  pullPolicy: Always
+  repository: registry.dkatalis.com/dk-spirit-idm
+  secret: regcred
+  tag: hannoto
+ingress:
+  enabled: true
+  hostName: ap-southeast-5.alicontainer.com
+  tls:
+    enabled: false
+    secretName: spirit-tls
+nodeSelector: {}
+resources:
+  limits:
+    cpu: 1000m
+    memory: 2Gi
+  requests:
+    cpu: 200m
+    memory: 256Mi
+service:
+  annotations: {}
+  port: 80
+  type: ClusterIP
