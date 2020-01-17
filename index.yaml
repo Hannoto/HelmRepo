@@ -3,7 +3,7 @@ entries:
   hello-world:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2020-01-17T11:31:51.9173763+07:00"
+    created: "2020-01-17T11:36:06.5394076+07:00"
     description: A Helm chart for Kubernetes
     digest: d9457090f5016cf14e21cca058446d61de66076d68a815f83d86e8a6a8edf596
     name: hello-world
@@ -14,7 +14,7 @@ entries:
   simple-chart:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-01-17T11:31:51.9183487+07:00"
+    created: "2020-01-17T11:36:06.5402595+07:00"
     description: A Helm chart for Kubernetes application deployment
     digest: 462823282b59b9dae8af960a7902c495e8a3438b46649a24ae39a64791a9042e
     name: simple-chart
@@ -24,11 +24,11 @@ entries:
   spirit-chart:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-01-17T11:31:51.9186963+07:00"
+    created: "2020-01-17T11:36:06.5412591+07:00"
     description: A Helm chart for Kubernetes application deployment
     digest: 73f65f8f7c9bd0032ba51c132efd27f06410d44ad2fe94a5548d4cecc5bb4546
     name: spirit-chart
     urls:
     - https://hannoto.github.io/HelmRepo/spirit-chart-1.0.0.tgz
     version: 1.0.0
-generated: "2020-01-17T11:31:51.9170998+07:00"
+generated: "2020-01-17T11:36:06.5382831+07:00"
